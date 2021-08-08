@@ -31,6 +31,7 @@ spec:
         volumeMounts:
         - name: home
           mountPath: /home
+          readOnly: true
       volumes:
       - name: home
         emptyDir: {}
