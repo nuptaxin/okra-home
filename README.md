@@ -39,7 +39,7 @@
 ## k8s安装
 1. 配置源
 	* cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-	```
+```
 [kubernetes]
 name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
@@ -48,7 +48,7 @@ gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-	```
+```
 2. 安装kubectl/kubelet/kubeadm
 	* yum install -y kubelet-1.19.8 kubectl-1.19.8 kubeadm-1.19.8
 	* 启动kubelet：systemctl enable kubelet && systemctl start kubelet
@@ -69,14 +69,14 @@ EOF
 ## 创建docker镜像
 1. 定义docsify的docker镜像
 	* vim Dockerfile
-	```
+```
 FROM node:latest
 LABEL description="A demo Dockerfile for build Docsify."
 WORKDIR /docs
 RUN npm install -g docsify-cli@latest
 EXPOSE 3000/tcp
 ENTRYPOINT docsify serve .
-	```
+```
 2. 创建镜像
 	* docker build -f Dockerfile -t nuptaxin/docsify-docker:v1.0.0 .
 ## markdown编辑站点
