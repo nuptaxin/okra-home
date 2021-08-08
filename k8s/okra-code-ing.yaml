@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kubia-ing
+  name: okracode-ing
 spec:
   rules:
   - host: home.okracode.com
@@ -12,14 +12,5 @@ spec:
         backend:
           service:
             name: okra-home-svc
-            port:
-              number: 80
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: okra-code-svc
             port:
               number: 80

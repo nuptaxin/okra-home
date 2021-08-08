@@ -105,6 +105,12 @@ ENTRYPOINT docsify serve .
 	* yaml文件参照[okra-home-svc.yaml](/k8s/okra-home-svc.yaml)
 5. 创建Service
 	* kubectl create -f okra-home-svc.yaml
+### 安装Ingress(参考文档：https://kubernetes.github.io/ingress-nginx/deploy)
+1. docker下载镜像（google镜像仓库上不去）：docker pull willdockerhub/ingress-nginx-controller:v0.48.1
+2. 下载安装脚本：wget http://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.48.1/deploy/static/provider/baremetal/deploy.yaml
+3. 修改安装脚本：将image: k8s.gcr.io/ingress-nginx/controller:v0.48.1xxx改为willdockerhub/ingress-nginx-controller:v0.48.1
+4. 安装Ingress：kubectl apply -f deploy.yaml
+5. 确认ingress-nginx-controller-xxx的pod已经running：kubectl get pods -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx --watch
 6. 定义Ingress
 	* yaml文件参照[okra-code-ing.yaml](/k8s/okra-code-ing.yaml)
 7. 创建Ingress
