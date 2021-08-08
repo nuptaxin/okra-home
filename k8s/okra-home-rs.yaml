@@ -6,11 +6,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      name: okra-home-rs
+      name: okra-home
   template:
     metadata:
       labels:
-        name: okra-home-rs
+        name: okra-home
     spec:
       containers:
       - name: git-sync
