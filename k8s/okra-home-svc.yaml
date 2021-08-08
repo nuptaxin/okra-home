@@ -7,4 +7,4 @@ spec:
   - port: 80
     targetPort: 3000
   selector:
-    name: docsify-home-svc
+    name: docsify-home-rs
