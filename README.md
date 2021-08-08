@@ -40,18 +40,32 @@
 1. 配置源
 	* cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 	(```）
-		[kubernetes]
-		name=Kubernetes
-		baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
-		enabled=1
-		gpgcheck=1
-		repo_gpgcheck=1
-		gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-		EOF
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
 	(```)
 2. 安装kubectl/kubelet/kubeadm
 	* yum install -y kubelet-1.19.8 kubectl-1.19.8 kubeadm-1.19.8
 	* 启动kubelet：systemctl enable kubelet && systemctl start kubelet
+3. kubeadm初始化（参照文档：https://docs.projectcalico.org/getting-started/kubernetes/quickstart）
+	* 初始化kubeadm：kubeadm init --ignore-preflight-errors=NumCPU --image-repository registry.aliyuncs.com/google_containers --kubernetes-version=v1.19.8 --pod-network-cidr=192.168.0.0/16
+	* 根据控制台输出内容配置kubectl
+		* mkdir -p $HOME/.kube
+		* sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+		* sudo chown $(id -u):$(id -g) $HOME/.kube/config
+	* 验证kubectl可用(此时node状态为NotReady)
+		* kubectl get no
+4. 安装网络插件calico（参照文档同上）
+	* kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+	* kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+	* 监控是否安装完成(该ns下有pod且状态为Running时即可)：kubectl get pods -n calico-system --watch
+	* 确认node已经Ready：kubectl get no
+5. 允许master节点部署pod：kubectl taint nodes --all node-role.kubernetes.io/master-
 ## markdown编辑站点
 1. 参照docsify官方文档编写站点（https://docsify.js.org/#/quickstart）
 	* 创建文件夹docs：mkdir docs
