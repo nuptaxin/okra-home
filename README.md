@@ -66,22 +66,30 @@ EOF
 	* 监控是否安装完成(该ns下有pod且状态为Running时即可)：kubectl get pods -n calico-system --watch
 	* 确认node已经Ready：kubectl get no
 5. 允许master节点部署pod：kubectl taint nodes --all node-role.kubernetes.io/master-
+## 创建docker镜像
+1. 定义docsify的docker镜像
+	* vim Dockerfile
+	```
+FROM node:latest
+LABEL description="A demo Dockerfile for build Docsify."
+WORKDIR /docs
+RUN npm install -g docsify-cli@latest
+EXPOSE 3000/tcp
+ENTRYPOINT docsify serve .
+	```
+2. 创建镜像
+	* docker build -f Dockerfile -t nuptaxin/docsify-docker:v1.0.0 .
 ## markdown编辑站点
 1. 参照docsify官方文档编写站点（https://docsify.js.org/#/quickstart）
-	* 创建文件夹docs：mkdir docs
-	* 进入docs：cd docs
 	* 创建入口文件：[index.html](/docs/index.html)
 	* 编写首页文件：[README.md](/docs/README.md)
-2. 站点测试（已通过npm i docsify-cli -g指令本地安装过docsify）
-	* 回到站点根目录：cd ..
+2. 本地站点测试（已通过npm i docsify-cli -g指令本地安装过docsify）
 	* 启动站点：docsify serve docs
 	* 访问站点：http://localhost:3000
 ## 上传站点到github
 1. 上传站点：git push
 2. 如果仓库在github上，可在gitee上导入，防止云服务器拉取不到：https://gitee.com/projects/import/github/status
-## 云服务器部署站点（腾讯云）
-### 云服务器与域名绑定：购买云服务器与域名，并将域名绑定到服务器IP上
-### k8s安装：云服务器安装k8s
+## 云服务器部署站点
 ### git-sync同步站点&&docsify解析站点
 1. 定义replicaSet
 	* pod上有两个容器

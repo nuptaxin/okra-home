@@ -26,7 +26,7 @@ spec:
         - name: GIT_SYNC_DEST
           value: okra-home
       - name: docsify
-        image: nuptaxin/test-docsify:v1.0.0
+        image: nuptaxin/docsify-docker:v1.0.0
         workingDir: /home/okra-home/docs
         volumeMounts:
         - name: home
