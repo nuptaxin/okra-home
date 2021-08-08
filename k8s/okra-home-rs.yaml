@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: okra-home-rs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: okra-home-rs
+  template:
+    metadata:
+      labels:
+        name: okra-home-rs
+    spec:
+      containers:
+      - name: git-sync
+        image: mirrorgooglecontainers/git-sync:v3.0.1
+        volumeMounts:
+        - name: home
+          mountPath: /home
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://gitee.com/nuptaxin/okra-home
+        - name: GIT_SYNC_ROOT
+          value: /home
+        - name: GIT_SYNC_DEST
+          value: okra-home
+      - name: docsify
+        image: nuptaxin/test-docsify:v1.0.0
+        workingDir: /home/okra-home/docs
+        volumeMounts:
+        - name: home
+          mountPath: /home
+      volumes:
+      - name: home
+        emptyDir: {}
