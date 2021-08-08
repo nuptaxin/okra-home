@@ -25,7 +25,9 @@
 	* yaml文件参照[okra-home-rs.yaml](/k8s/okra-home-rs.yaml)
 2. 创建 replicaSet
 	* kubectl create -f okra-home-rs.yaml
-3. 定义服务将docsify转发到云服务器的80端口
+3. 测试访问
+	* 端口映射临时访问（需要开放对应targetPort的防火墙）：kubectl port-forward rs/okra-home-rs 8080:3000 --address 0.0.0.0
+4. 定义服务将docsify转发到云服务器的80端口
 	* yaml文件参照[okra-home-svc.yaml](/k8s/okra-home-svc.yaml)
-4. 创建 Service
+5. 创建 Service
 	* kubectl create -f okra-home-svc.yaml
