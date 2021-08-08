@@ -1,6 +1,27 @@
-# 站点：home.okracode.com
-# 技术：markdown + docsify + k8s
+# 站点
+## home.okracode.com
+# 技术
+## markdown
+## docsify
+## docker
+## k8s
+# 环境
+## 云服务器
+1. 操作系统镜像：CentOS 7.5 64位
+2. IP地址
+	* 公网：49.***.***.155
+	* 内网：172.17.0.17
+3. 安全组
+	* 开放80端口入站（用于站点正常访问）
+	* 开放8080端口入站（用于调试）	
+## 域名
+1. A记录添加
+	* www：www.okracode.com记录添加（非本次必须）
+	* @：okracode.com记录添加（非本次必须）
+	* *：*.okracode.com记录添加（必须，否则子域名无法解析到主机）
 # 站点生成与部署说明
+## docker安装
+1. 
 ## markdown编辑站点
 1. 参照docsify官方文档编写站点（https://docsify.js.org/#/quickstart）
 	* 创建文件夹docs：mkdir docs
