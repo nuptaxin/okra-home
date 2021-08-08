@@ -9,19 +9,33 @@
 ## 云服务器
 1. 操作系统镜像：CentOS 7.5 64位
 2. IP地址
-	* 公网：49.***.***.155
+	* 公网：49.\*.\*.155
 	* 内网：172.17.0.17
 3. 安全组
 	* 开放80端口入站（用于站点正常访问）
-	* 开放8080端口入站（用于调试）	
+	* 开放8080端口入站（用于调试）
+	* 开放22端口（用于远程）
+4. 远程到服务器
+	* ssh root@49.\*.\*.155
 ## 域名
 1. A记录添加
 	* www：www.okracode.com记录添加（非本次必须）
 	* @：okracode.com记录添加（非本次必须）
-	* *：*.okracode.com记录添加（必须，否则子域名无法解析到主机）
+	* \*：\*.okracode.com记录添加（必须，否则子域名无法解析到主机）
 # 站点生成与部署说明
 ## docker安装
-1. 
+1. 添加软件源
+	* yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+2. 更新源（可能需要几分钟）
+	* yum -y update
+3. 查询可用安装包
+	* yum list docker-ce --showduplicates
+4. 安装docker
+	* yum install docker-ce-
+5. 启动docker并设置开机启动
+	* systemctl start docker.service && systemctl enable docker.service
+6. 查看docker状态
+	* systemctl status docker.service
 ## markdown编辑站点
 1. 参照docsify官方文档编写站点（https://docsify.js.org/#/quickstart）
 	* 创建文件夹docs：mkdir docs
