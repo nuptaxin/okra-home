@@ -29,13 +29,29 @@
 2. 更新源（可能需要几分钟）
 	* yum -y update
 3. 查询可用安装包
-	* yum list docker-ce --showduplicates
-4. 安装docker
-	* yum install docker-ce-
+	* yum list docker-ce --showduplicates | sort -r
+4. 安装docker（此处选择3:20.10.5-3.el7版本; 注：指定版本号的格式为docker-ce-版本号.x86_64；此处安装需要几分钟）
+	* yum -y install docker-ce-3:20.10.5-3.el7.x86_64
 5. 启动docker并设置开机启动
 	* systemctl start docker.service && systemctl enable docker.service
-6. 查看docker状态
+6. 查看docker状态（Active: active (running)）
 	* systemctl status docker.service
+## k8s安装
+1. 配置源
+	* cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+	(```）
+		[kubernetes]
+		name=Kubernetes
+		baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+		enabled=1
+		gpgcheck=1
+		repo_gpgcheck=1
+		gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+		EOF
+	(```)
+2. 安装kubectl/kubelet/kubeadm
+	* yum install -y kubelet-1.19.8 kubectl-1.19.8 kubeadm-1.19.8
+	* 启动kubelet：systemctl enable kubelet && systemctl start kubelet
 ## markdown编辑站点
 1. 参照docsify官方文档编写站点（https://docsify.js.org/#/quickstart）
 	* 创建文件夹docs：mkdir docs
