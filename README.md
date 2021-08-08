@@ -30,5 +30,13 @@
 	* 访问站点：http://okracode.com:8080
 4. 定义服务将docsify转发到云服务器的80端口
 	* yaml文件参照[okra-home-svc.yaml](/k8s/okra-home-svc.yaml)
-5. 创建 Service
+5. 创建Service
 	* kubectl create -f okra-home-svc.yaml
+6. 定义Ingress
+	* yaml文件参照[okra-code-ing.yaml](/k8s/okra-code-ing.yaml)
+7. 创建Ingress
+	* kubectl create -f okra-code-ing.yaml
+8. 定义nodeport接入外部流量
+	* yaml文件参照[ingress-nginx.yaml](/k8s/ingerss-nginx.yaml)
+9. 创建nodeport
+	* kubectl create -f ingress-nginx.yaml 
