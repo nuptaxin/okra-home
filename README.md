@@ -3,16 +3,29 @@
 # 站点生成与部署说明
 ## markdown编辑站点
 1. 参照docsify官方文档编写站点（https://docsify.js.org/#/quickstart）
-* 创建文件夹docs：mkdir docs
-* 进入docs：cd docs
-* 创建入口文件：[index.html](/docs/index.html)
-* 编写首页文件：[README.md](/docs/README.md)
+	* 创建文件夹docs：mkdir docs
+	* 进入docs：cd docs
+	* 创建入口文件：[index.html](/docs/index.html)
+	* 编写首页文件：[README.md](/docs/README.md)
 2. 站点测试（已通过npm i docsify-cli -g指令本地安装过docsify）
-* 回到站点根目录：cd ..
-* 启动站点：docsify serve docs
-* 访问站点：http://localhost:3000
+	* 回到站点根目录：cd ..
+	* 启动站点：docsify serve docs
+	* 访问站点：http://localhost:3000
 ## 上传站点到github
 1. 上传站点：git push
 2. 如果仓库在github上，可在gitee上导入，防止云服务器拉取不到：https://gitee.com/projects/import/github/status
-## git-sync同步站点
-## docsify解析站点
+## 云服务器部署站点（腾讯云）
+### 云服务器与域名绑定：购买云服务器与域名，并将域名绑定到服务器IP上
+### k8s安装：云服务器安装k8s
+### git-sync同步站点&&docsify解析站点
+1. 定义replicaSet
+	* pod上有两个容器
+		* 容器1：使用git-sync同步git仓库
+		* 容器2：部署docsify解析站点
+	* yaml文件参照[okra-home-rs.yaml](/k8s/okra-home-rs.yaml)
+2. 创建 replicaSet
+	* kubectl create -f okra-home-rs.yaml
+3. 定义服务将docsify转发到云服务器的80端口
+	* yaml文件参照[okra-home-svc.yaml](/k8s/okra-home-svc.yaml)
+4. 创建 Service
+	* kubectl create -f okra-home-svc.yaml
