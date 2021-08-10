@@ -60,12 +60,19 @@
 		* sudo chown $(id -u):$(id -g) $HOME/.kube/config
 	* 验证kubectl可用(此时node状态为NotReady)
 		* kubectl get no
-4. 安装网络插件calico（参照文档同上）
+4. 修改调度器Unhealthy状态
+	* 查看调度器：kubectl get cs
+	* 如果scheduler和controller-manager都为Unhealthy,将port=0这行注释掉
+		* vim /etc/kubernetes/manifests/kube-scheduler.yaml
+		* vim /etc/kubernetes/manifests/kube-controller-manager.yaml
+		* systemctl restart kubelet.service
+	* 确认调度器：kubectl get cs
+5. 安装网络插件calico（参照文档同上）
 	* kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
 	* kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
 	* 监控是否安装完成(该ns下有pod且状态为Running时即可)：kubectl get pods -n calico-system --watch
 	* 确认node已经Ready：kubectl get no
-5. 允许master节点部署pod：kubectl taint nodes --all node-role.kubernetes.io/master-
+6. 允许master节点部署pod：kubectl taint nodes --all node-role.kubernetes.io/master-
 ## 创建docker镜像
 1. 定义docsify的docker镜像
 	* vim Dockerfile
