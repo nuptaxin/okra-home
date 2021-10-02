@@ -1,2 +1,2 @@
-* [主页](https://okracode.com)
-* [配置中心](https://qconfig.okracode.com)
+* [首页](/)
+* [配置中心](http://qconfig.okracode.com)
